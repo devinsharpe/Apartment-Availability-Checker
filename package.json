@@ -1,0 +1,15 @@
+{
+  "name": "apartment-availability-checker",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Devin Sharpe <devinrsharpe@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.30",
+    "typescript": "^4.6.4"
+  }
+}
