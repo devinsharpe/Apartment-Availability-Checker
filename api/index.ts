@@ -7,9 +7,9 @@ import {
   getFirestore,
   setDoc
 } from "firebase/firestore";
+import type { ElementHandle, Page } from "puppeteer-core";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 
-import type { Page } from "puppeteer-core";
 import chromium from "chrome-aws-lambda";
 import dotenv from "dotenv";
 import { initializeApp } from "firebase/app";
@@ -50,27 +50,27 @@ const complexConfig = {
       while (index + 1) {
         let heading, subheading;
         try {
-          heading = await page.waitForSelector(`h2#fp-header-${index}`, {
+          heading = (await page.waitForSelector(`h2#fp-header-${index}`, {
             visible: true,
             timeout: 500
-          });
-          subheading = await page.waitForSelector(
+          })) as ElementHandle<HTMLHeadingElement>;
+          subheading = (await page.waitForSelector(
             `span[data-selenium-id='Floorplan${index} Availability']`,
             {
               visible: true,
               timeout: 500
             }
-          );
+          )) as ElementHandle<HTMLHeadingElement>;
         } catch (e) {}
 
         if (heading && subheading) {
-          const name = (await heading.getInnerText())
+          const name = (await heading.evaluate((h) => h.innerText))
             .trim()
             .toLowerCase()
             .replace(/ /g, "-");
-          const label = (await heading.getInnerText()).trim();
+          const label = (await heading.evaluate((h) => h.innerText)).trim();
           let amtAvail = 0;
-          const availText = await subheading.getInnerText();
+          const availText = await subheading.evaluate((h) => h.innerText);
           if (availText.includes("Available"))
             amtAvail = parseInt(availText.split(" ")[0], 10);
           plans[name] = { name, label, amtAvail };
