@@ -207,6 +207,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await main();
     res.status(204).end();
   } catch (e) {
+    console.log(e);
     res.status(500).send({ error: e });
   }
 }
