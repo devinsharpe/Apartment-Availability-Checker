@@ -3,7 +3,7 @@ name: send-message
 
 on:
   schedule:
-    - cron: "0 21 * * *"
+    - cron: "10 21 * * *"
   
 jobs: 
   request:
@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send
-        run: curl $ENDPOINT
+        run: curl "$ENDPOINT"
