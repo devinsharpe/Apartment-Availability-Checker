@@ -3,7 +3,7 @@ name: send-message
 
 on:
   schedule:
-    - cron: "0 14 * * *"
+    - cron: "0 21 * * *"
   
 jobs: 
   request:
