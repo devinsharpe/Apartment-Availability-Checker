@@ -1,0 +1,14 @@
+
+name: send-message
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  
+jobs: 
+  request:
+    name: Request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send
+        run: curl $ENDPOINT
