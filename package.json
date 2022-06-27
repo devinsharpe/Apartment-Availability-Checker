@@ -5,7 +5,6 @@
   "author": "Devin Sharpe <devinrsharpe@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "start": "tsc && node dist"
   },
   "devDependencies": {
