@@ -34,12 +34,7 @@ const complexConfig = {
     page: "https://www.theharrisonatbraselton.com/floorplans",
     init: async (page: Page) => {
       await page.waitForTimeout(1000);
-      const modalDismissEl = await page.waitForSelector(
-        "a[data-dismiss='modal']",
-        {
-          visible: true
-        }
-      );
+      const modalDismissEl = await page.$("a[data-dismiss='modal']");
       if (modalDismissEl) {
         modalDismissEl.click();
       }
@@ -201,6 +196,8 @@ async function main() {
   }
   browser.close();
 }
+
+export { main };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
