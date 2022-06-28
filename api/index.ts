@@ -189,7 +189,7 @@ async function main() {
     );
     const notifyNeeded = checkFloorPlanDifferences(currentPlans, floorPlans);
     await updateRemoteFloorPlans(currentPlans, floorPlansCol);
-    if (!notifyNeeded) {
+    if (notifyNeeded) {
       const message = formatPlansMessage(complex.name, currentPlans);
       await sendMessage(message, twilioClient);
     }
