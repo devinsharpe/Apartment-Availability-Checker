@@ -110,6 +110,12 @@ function checkFloorPlanDifferences(
   remote: { id: string; label: string; amtAvail: number }[]
 ) {
   let notifyNeeded = false;
+  console.log(
+    JSON.stringify({
+      action: "check-floorplan-differences",
+      details: { current, remote }
+    })
+  );
   for (const [name, plan] of Object.entries(current)) {
     const existingPlan = remote.find((p) => p.id === name);
     if (
@@ -127,6 +133,14 @@ async function updateRemoteFloorPlans(
   current: FloorPlanObject,
   collection: CollectionReference
 ) {
+  console.log(
+    JSON.stringify({
+      action: "update-remote-floorplans",
+      details: {
+        floorPlans: current
+      }
+    })
+  );
   for (const [name, plan] of Object.entries(current)) {
     await setDoc(doc(collection, plan.name), {
       label: plan.label,
@@ -145,7 +159,15 @@ function formatPlansMessage(complexName: string, plans: FloorPlanObject) {
 
 async function sendMessage(message: string, twilioClient: twilio.Twilio) {
   const recipients = process.env.TWILIO_TO_PHONE.split(",");
-  console.log("Sending message: ", recipients);
+  console.log(
+    JSON.stringify({
+      action: "send-message",
+      details: {
+        message,
+        recipients
+      }
+    })
+  );
   for (const recipient of recipients) {
     await twilioClient.messages.create({
       body: message,
@@ -194,6 +216,13 @@ async function main() {
       const message = formatPlansMessage(complex.name, currentPlans);
       await sendMessage(message, twilioClient);
     }
+    console.log({
+      action: "terminating-function",
+      details: {
+        complex: key,
+        notificationSent: notifyNeeded
+      }
+    });
   }
   browser.close();
 }
