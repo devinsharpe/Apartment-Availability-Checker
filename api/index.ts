@@ -145,6 +145,7 @@ function formatPlansMessage(complexName: string, plans: FloorPlanObject) {
 
 async function sendMessage(message: string, twilioClient: twilio.Twilio) {
   const recipients = process.env.TWILIO_TO_PHONE.split(",");
+  console.log("Sending message: ", recipients);
   for (const recipient of recipients) {
     await twilioClient.messages.create({
       body: message,
